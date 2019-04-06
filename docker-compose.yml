@@ -1,0 +1,41 @@
+version: '3'
+services:
+    manager-nginx:
+        build:
+            context: ./manager/docker/development
+            dockerfile: nginx.docker
+        volumes: 
+            - ./manager:/app
+        depends_on: 
+            - manager-php-fpm
+        ports: 
+            - "8000:8000"
+    manager-php-fpm:
+        build:
+            context: ./manager/docker/development
+            dockerfile: php-fpm.docker
+        environment:
+            APP_DEBUG: 1
+        volumes: 
+            - ./manager:/app
+    manager-apache:
+        build:
+            context: ./manager/docker/development
+            dockerfile: apache.docker
+        volumes:
+            - ./manager:/app
+        ports:
+            - "8080:80"
+    manager-php-cli:
+        build:
+            context: ./manager/docker/development
+            dockerfile: php-cli.docker
+        environment:
+            APP_DEBUG: 1
+        volumes: 
+            - ./manager:/app
+            - composer:/root/.composer/cache
+
+volumes:
+    composer:
+
