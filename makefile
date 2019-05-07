@@ -41,6 +41,9 @@ dev-down:
 dev-compose-down:
 	docker-compose down --remove-orphans
 
+dev-compose-doww-clear:
+	docker-compose down -v --remove-orphans
+
 dev-build:
 	docker build --file=manager/docker/development/php-fpm.docker --tag manager-php-fpm manager/docker/development
 	docker build --file=manager/docker/development/nginx.docker   --tag manager-nginx   manager/docker/development
@@ -70,5 +73,5 @@ manager-init: manager-composer-install
 
 
 test: manager-test
-init: dev-compose-down dev-compose-pull dev-compose-build dev-compose-up manager-init
+init: dev-compose-doww-clear dev-compose-pull dev-compose-build dev-compose-up manager-init
 up: dev-compose-up
