@@ -33,11 +33,31 @@ class ConfirmTest extends TestCase
     }
     
     
-    private function buildSignedUser():User
+    
+    public function testSignedAlready(): void
     {
-        return new User($id = new Id("guid"),
+        $user = new User($id = new Id("guid"));
+        
+        $user->signUpByEmail(
                 $email = new Email("test@ya.ru"), 
                 $token = new Token("token"),
                 $pass = "pass");
+        
+        $this->expectExceptionMessage("User is already signed");
+        $user->signUpByEmail($email,$token,$pass);
+        
+    }
+    
+    
+    private function buildSignedUser():User
+    {
+        $user = new User($id = new Id("guid"));
+        
+        $user->signUpByEmail(
+                $email = new Email("test@ya.ru"), 
+                $token = new Token("token"),
+                $pass = "pass");
+        
+        return $user;
     }
 }

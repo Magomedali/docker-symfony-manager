@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace App\Model\User\UseCase\SignUp\Request;
+namespace App\Model\User\UseCase\Network\Auth;
 
 use App\Model\User\Entity\User\{User,Email,Id,Token,UserRepository};
 use App\Model\User\Service\{PasswordHasher,ConfirmTokenizer,ConfirmTokenSender};
@@ -15,25 +15,13 @@ class Handler {
     private $users;
     
     
-    private $hasher;
-    
-    
     private $flusher;
     
     
-    private $sender;
-    
-    
-    private $tokenizer;
-    
-    
-    public function __construct(UserRepository $users,PasswordHasher $hasher,ConfirmTokenizer $tokenizer,ConfirmTokenSender $sender, Flusher $flusher)
+    public function __construct(UserRepository $users, Flusher $flusher)
     {
         $this->users = $users;
-        $this->hasher = $hasher;
         $this->flusher = $flusher;
-        $this->sender = $sender;
-        $this->tokenizer = $tokenizer;
     }
     
     public function handle(Command $command): void
@@ -41,20 +29,15 @@ class Handler {
         $email = new Email($$command->email);
         $token = $this->tokenizer->generate();
         
-        if($this->users->hasByEmail($email))
+        if($this->users->hasByNetworkIdentity($command->network,$command->identity))
             throw new \DomainException("User already exists!");
         
         $user = new User(Id::next());
         
-        $user->signUpByEmail(
-                $email,
-                new Token($token),
-                $this->hasher->hash($command->password)
-        );
+        $user->signUpByNetwork($command->network,$command->identity);
         
         $this->users->add($user);
         
-        $this->sender->send($email,$token);
         $this->flusher->flush();
     }
 }

@@ -9,8 +9,11 @@ class RequestTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $user = new User(
-                $id = new Id("guid"),
+        $user = new User($id = new Id("guid"));
+        
+        $this->assertTrue($user->isNew());
+        
+        $user->signUpByEmail(
                 $email = new Email("test@ya.ru"), 
                 $token = new Token("token"),
                 $pass = "pass");
