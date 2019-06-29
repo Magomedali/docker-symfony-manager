@@ -21,12 +21,22 @@ class UserBuilder
 
     private $identity;
 
+    private $confirmed;
+
+
     public function __construct()
     {
         $this->id = Id::next();
         $this->date = new \DateTimeImmutable();
     }
 
+
+    public function confirmed(): self
+    {
+        $clone = clone $this;
+        $clone->confirmed = true;
+        return $clone;
+    }
 
     public function viaEmail(Email $email = null, string $hash = null, string $token = null): self
     {
@@ -58,6 +68,10 @@ class UserBuilder
                 $this->token,
                 $this->hash
             );
+
+            if ($this->confirmed) {
+                $user->confirmToken();
+            }
         }
         if ($this->network) {
             $user->signUpByNetwork(
