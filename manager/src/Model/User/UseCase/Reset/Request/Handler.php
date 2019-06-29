@@ -1,5 +1,6 @@
 <?php
-namespace App\Model\User\UseCase\Reset\Requset;
+declare(strict_types=1);
+namespace App\Model\User\UseCase\Reset\Request;
 
 use DateTimeImmutable;
 use App\Model\User\Entity\User\{UserRepository,Email};
