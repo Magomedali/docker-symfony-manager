@@ -109,7 +109,7 @@ class User {
     }
     
     
-    public function getResetToken(): ResetToken
+    public function getResetToken(): ?ResetToken
     {
         return $this->resetToken;
     }
@@ -178,7 +178,7 @@ class User {
     
     
     
-    public function requestResetToken(ResetToken $token, DateTimeImmutable $date):void
+    public function requestPasswordReset(ResetToken $token, DateTimeImmutable $date):void
     {
         if(!$this->isActive())
             throw new \DomainException("User is not active");
@@ -186,9 +186,8 @@ class User {
         if(!$this->email)
             throw new \DomainException("Email is not specified.");
         
-        
         if($this->resetToken && !$this->resetToken->isExpiredTo($date))
-            throw new \DomainException("Resetting is already required");
+            throw new \DomainException("Resetting is already requested.");
         
         $this->resetToken = $token;
     }
@@ -198,10 +197,10 @@ class User {
     public function passwordReset(DateTimeImmutable $date, string $hash): void
     {
         if(!$this->resetToken)
-            throw new \DomainException("Resetting is not required");
+            throw new \DomainException("Resetting is not requested.");
         
         if($this->resetToken->isExpiredTo($date))
-            throw new \DomainException("Reset token is expired");
+            throw new \DomainException("Reset token is expired.");
         
         $this->passwordHash = $hash;
         $this->resetToken = null;

@@ -33,7 +33,7 @@ class Handler {
     {
         $user = $this->users->getByEmail(new Email($command->email));
         
-        $user->requestResetToken($this->tokenizer->generate(), new DateTimeImmutable());
+        $user->requestPasswordReset($this->tokenizer->generate(), new DateTimeImmutable());
         
         $this->flusher->flush();
         

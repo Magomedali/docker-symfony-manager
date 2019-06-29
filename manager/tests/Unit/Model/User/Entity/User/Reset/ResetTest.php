@@ -12,10 +12,14 @@ class ResetTest extends TestCase
     public function testSuccess(): void
     {
         $user = (new UserBuilder())->viaEmail()->build();
+        $user->confirmToken();
+
         $now = new \DateTimeImmutable();
         $token = new ResetToken('token', $now->modify('+1 day'));
+
         $user->requestPasswordReset($token, $now);
         self::assertNotNull($user->getResetToken());
+
         $user->passwordReset($now, $hash = 'hash');
         self::assertNull($user->getResetToken());
         self::assertEquals($hash, $user->getPasswordHash());
@@ -27,8 +31,11 @@ class ResetTest extends TestCase
     public function testExpiredToken(): void
     {
         $user = (new UserBuilder())->viaEmail()->build();
+        $user->confirmToken();
+
         $now = new \DateTimeImmutable();
         $token = new ResetToken('token', $now);
+        
         $user->requestPasswordReset($token, $now);
         $this->expectExceptionMessage('Reset token is expired.');
         $user->passwordReset($now->modify('+1 day'), 'hash');
@@ -40,6 +47,7 @@ class ResetTest extends TestCase
     public function testNotRequested(): void
     {
         $user = (new UserBuilder())->viaEmail()->build();
+        $user->confirmToken();
         $now = new \DateTimeImmutable();
         $this->expectExceptionMessage('Resetting is not requested.');
         $user->passwordReset($now, 'hash');

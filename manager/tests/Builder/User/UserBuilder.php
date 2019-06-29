@@ -11,8 +11,6 @@ class UserBuilder
 {
     private $id;
 
-    private $date;
-
     private $email;
 
     private $hash;
@@ -52,8 +50,7 @@ class UserBuilder
     public function build(): User
     {
         $user = new User(
-            $this->id,
-            $this->date
+            $this->id
         );
         if ($this->email) {
             $user->signUpByEmail(

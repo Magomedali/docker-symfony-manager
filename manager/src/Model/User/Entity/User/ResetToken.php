@@ -2,7 +2,7 @@
 
 namespace App\Model\User\Entity\User;
 
-
+use DateTimeImmutable;
 use Webmozart\Assert\Assert;
 /**
  * Description of ResetToken

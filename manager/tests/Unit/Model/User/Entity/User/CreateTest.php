@@ -12,11 +12,9 @@ class CreateTest extends TestCase
     public function testSuccess(): void
     {
         $user = new User(
-            $id = Id::next(),
-            $date = new \DateTimeImmutable()
+            $id = Id::next()
         );
         self::assertTrue($user->isNew());
         self::assertEquals($id, $user->getId());
-        self::assertEquals($date, $user->getDate());
     }
 }
