@@ -44,9 +44,8 @@ class Handler {
         if($this->users->hasByEmail($email))
             throw new \DomainException("User already exists!");
         
-        $user = new User(Id::next());
-        
-        $user->signUpByEmail(
+        $user = User::signUpByEmail(
+                Id::next(),
                 $email,
                 new Token($token),
                 $this->hasher->hash($command->password)

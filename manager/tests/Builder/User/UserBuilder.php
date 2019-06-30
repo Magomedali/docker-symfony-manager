@@ -30,6 +30,9 @@ class UserBuilder
         $this->date = new \DateTimeImmutable();
     }
 
+    public static function instance():self{
+        return new self();
+    }
 
     public function confirmed(): self
     {
@@ -38,7 +41,7 @@ class UserBuilder
         return $clone;
     }
 
-    public function viaEmail(Email $email = null, string $hash = null, string $token = null): self
+    public function viaEmail(Email $email = null, string $hash = null, Token $token = null): self
     {
         $clone = clone $this;
         $clone->email = $email ?? new Email('mail@app.test');
@@ -59,11 +62,10 @@ class UserBuilder
     
     public function build(): User
     {
-        $user = new User(
-            $this->id
-        );
+        
         if ($this->email) {
-            $user->signUpByEmail(
+            $user=User::signUpByEmail(
+                $this->id,
                 $this->email,
                 $this->token,
                 $this->hash
@@ -72,13 +74,18 @@ class UserBuilder
             if ($this->confirmed) {
                 $user->confirmToken();
             }
+
+            return $user;
         }
+
         if ($this->network) {
-            $user->signUpByNetwork(
+            return  User::signUpByNetwork(
+                $this->id,
                 $this->network,
                 $this->identity
             );
         }
-        return $user;
+
+        throw new \BadMethodCallException('Specify via method.');
     }
 }

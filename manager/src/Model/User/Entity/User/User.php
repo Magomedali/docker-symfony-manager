@@ -59,34 +59,31 @@ class User {
     
     
     
-    public function __construct(Id $id)
+    private function __construct(Id $id)
     {
         $this->id = $id;
         $this->created_at = new DateTimeImmutable();
-        $this->status = self::STATUS_NEW;
         $this->networks = new ArrayCollection();
     }
     
-    public function signUpByEmail(Email $email,Token $confirmToken, string $hash):void
+    public static function signUpByEmail(Id $id,Email $email,Token $confirmToken, string $hash):self
     {
-        if(!$this->isNew())
-            throw new \DomainException("User is already signed");
-        
-        $this->email = $email;
-        $this->passwordHash = $hash;
-        $this->confirmToken = $confirmToken;
-        $this->status = self::STATUS_WAIT;
+        $user = new Self($id);
+        $user->email = $email;
+        $user->passwordHash = $hash;
+        $user->confirmToken = $confirmToken;
+        $user->status = self::STATUS_WAIT;
+        return $user;
     }
     
     
     
-    public function signUpByNetwork(string $network,string $identity):void
+    public static function signUpByNetwork(Id $id,string $network,string $identity):self
     {
-        if(!$this->isNew())
-            throw new \DomainException("User is already signed");
-        
-        $this->attachNetwork($network,$identity);
-        $this->status = self::STATUS_ACTIVE;
+        $user = new Self($id);
+        $user->attachNetwork($network,$identity);
+        $user->status = self::STATUS_ACTIVE;
+        return $user;
     }
     
     

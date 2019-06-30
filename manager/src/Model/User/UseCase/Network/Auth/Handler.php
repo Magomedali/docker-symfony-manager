@@ -32,9 +32,7 @@ class Handler {
         if($this->users->hasByNetworkIdentity($command->network,$command->identity))
             throw new \DomainException("User already exists!");
         
-        $user = new User(Id::next());
-        
-        $user->signUpByNetwork($command->network,$command->identity);
+        $user = User::signUpByNetwork(Id::next(),$command->network,$command->identity);
         
         $this->users->add($user);
         
