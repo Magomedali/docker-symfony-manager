@@ -8,6 +8,7 @@ namespace App\Model\User\Entity\User;
  */
 interface UserRepository {
     
+    public function get(Id $id): User;
     
     public function hasByEmail(Email $email):bool;
     

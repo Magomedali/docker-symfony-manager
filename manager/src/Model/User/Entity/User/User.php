@@ -42,6 +42,10 @@ class User {
      */
     private $passwordHash;
     
+    /**
+     * @var Role
+     */
+    private $role;
     
     /**
      * @var string
@@ -63,6 +67,7 @@ class User {
     {
         $this->id = $id;
         $this->created_at = new DateTimeImmutable();
+        $this->role = Role::user();
         $this->networks = new ArrayCollection();
     }
     
@@ -116,6 +121,14 @@ class User {
     {
         return $this->confirmToken;
     }
+
+
+    public function getRole(): Role
+    {
+        return $this->role;
+    }
+    
+
     
     
     
@@ -149,6 +162,16 @@ class User {
         return $this->created_at;
     }
     
+
+
+    public function changeRole(Role $role): void
+    {
+        if ($this->role->isEqual($role)) {
+            throw new \DomainException('Role is already same.');
+        }
+        $this->role = $role;
+    }
+
     
     
     public function confirmToken(): void

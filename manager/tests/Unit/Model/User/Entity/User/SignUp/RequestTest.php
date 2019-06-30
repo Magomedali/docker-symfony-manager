@@ -21,6 +21,7 @@ class RequestTest extends TestCase
         $this->assertFalse($user->isActive());
         
         // $this->assertEquals($id, $user->getId());
+        $this->assertTrue($user->getRole()->isUser());
         $this->assertEquals($email, $user->getEmail());
         $this->assertEquals($token, $user->getConfirmToken());
         $this->assertEquals($pass, $user->getPasswordHash());
