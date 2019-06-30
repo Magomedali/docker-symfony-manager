@@ -4,16 +4,17 @@ namespace App\Model\User\Entity\User;
 
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+use Doctrine\ORM\Mapping as ORM;
+
 
 /**
- * Description of User
  *
- * @author ali
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(name="user_users" uniqueConstraints={
+ *      @ORM\UniqueConstraint(columns={"email"})          
+ *      @ORM\UniqueConstraint(columns={"reset_token_token"})
+ * })
  */
 class User {
     
@@ -25,41 +26,71 @@ class User {
     
     /**
      * @var string
+     * @ORM\Column(type="user_user_id")
+     * @ORM\Id
      */
     private $id;
     
     
+    /**
+     * @var DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
+     *
+     */
     private $created_at;
     
     /**
-    * @var string
+    * @var Email|null
+    * @ORM\Column(type="user_user_email", nullable=true)
+    * 
     */
     private $email;
     
     
     /**
      * @var string
+     * @ORM\Column(type="string", name="password_hash", nullable=true)
      */
     private $passwordHash;
     
-    /**
-     * @var Role
-     */
-    private $role;
-    
+
     /**
      * @var string
+     * @ORM\Column(type="string", name="confirm_token", nullable=true)
      */
     private $confirmToken;
     
     
+    /**
+    * @ORM\Embedded(class="ResetToken", columnPrefix="reset_token_")
+    */
     private $resetToken;
     
+
+
+    /**
+     * @var Role
+     * @ORM\Column(type="user_user_role", length=16)
+     */
+    private $role;
+
+
     
+    /**
+    * @ORM\Column(type="string", length=16)
+    */
+    private $status;
+
+
+
+    /**
+    *
+    * @ORM\OneToMany(targetEntity="Network", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+    *
+    */
     private $networks;
     
-    
-    private $status;
+
     
     
     
@@ -224,5 +255,17 @@ class User {
         
         $this->passwordHash = $hash;
         $this->resetToken = null;
+    }
+
+
+
+    /**
+     * @ORM\PostLoad()
+     */
+    public function checkEmbeds(): void
+    {
+        if ($this->resetToken->isEmpty()) {
+            $this->resetToken = null;
+        }
     }
 }

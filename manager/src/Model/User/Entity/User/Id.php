@@ -25,4 +25,10 @@ class Id {
     {
         return new self(\Ramsey\Uuid\Uuid::uuid4()->toString());
     }
+
+
+    public function __toString(): string
+    {
+        return $this->value();
+    }
 }
