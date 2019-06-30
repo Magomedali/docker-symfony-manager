@@ -4,7 +4,7 @@ namespace App\Model\User\UseCase\Reset\Request;
 
 use DateTimeImmutable;
 use App\Model\User\Entity\User\{UserRepository,Email};
-use App\Model\User\UseCase\Flusher;
+use App\Model\Flusher;
 use App\Model\User\Service\{ResetTokenizer,ResetTokenSender};
 /**
  * Description of Handler

@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\Model\User\UseCase\SignUp\Confirm;
 
 use App\Model\User\Entity\User\{User,Token,UserRepository};
-use App\Model\User\Flusher;
+use App\Model\Flusher;
 /**
  * Description of Handler
  *

@@ -4,7 +4,7 @@ namespace App\Model\User\UseCase\Reset\Reset;
 
 use DateTimeImmutable;
 use App\Model\User\Entity\User\{User,UserRepository,ResetToken};
-use App\Model\User\UseCase\Flusher;
+use App\Model\Flusher;
 use App\Model\User\Service\PasswordHasher;
 /**
  * Description of Handler

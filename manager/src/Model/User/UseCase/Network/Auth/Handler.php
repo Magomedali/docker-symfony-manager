@@ -4,7 +4,7 @@ namespace App\Model\User\UseCase\Network\Auth;
 
 use App\Model\User\Entity\User\{User,Email,Id,Token,UserRepository};
 use App\Model\User\Service\{PasswordHasher,ConfirmTokenizer,ConfirmTokenSender};
-use App\Model\User\Flusher;
+use App\Model\Flusher;
 /**
  * Description of Handler
  *
