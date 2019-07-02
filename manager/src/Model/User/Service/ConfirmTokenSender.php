@@ -7,7 +7,10 @@ use App\Model\User\Entity\User\Email;
  *
  * @author ali
  */
-interface ConfirmTokenSender {
+class ConfirmTokenSender {
     
-    public function send(Email $email,string $token):void;
+    public function send(Email $email,string $token):void
+    {
+    	
+    }
 }

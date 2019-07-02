@@ -38,7 +38,7 @@ class Handler {
     
     public function handle(Command $command): void
     {
-        $email = new Email($$command->email);
+        $email = new Email($command->email);
         $token = $this->tokenizer->generate();
         
         if($this->users->hasByEmail($email))
