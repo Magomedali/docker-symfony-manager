@@ -19,6 +19,7 @@ doctrine:
         
         types:
             user_user_id: 'App\Model\User\Entity\User\IdType'
+            user_user_token: 'App\Model\User\Entity\User\TokenType'
             user_user_email: 'App\Model\User\Entity\User\EmailType'
             user_user_role: 'App\Model\User\Entity\User\RoleType'
 

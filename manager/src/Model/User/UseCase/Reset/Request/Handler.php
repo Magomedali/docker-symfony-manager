@@ -30,7 +30,7 @@ class Handler {
     }
 
 
-    public function handler(Command $command)
+    public function handle(Command $command)
     {
         $user = $this->users->getByEmail(new Email($command->email));
         

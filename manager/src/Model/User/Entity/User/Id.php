@@ -16,7 +16,7 @@ class Id {
     }
     
     
-    public function value()
+    public function getValue()
     {
         return $this->value;
     }
@@ -29,6 +29,6 @@ class Id {
 
     public function __toString(): string
     {
-        return $this->value();
+        return $this->getValue();
     }
 }

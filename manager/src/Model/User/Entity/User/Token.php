@@ -17,8 +17,14 @@ class Token {
     }
     
     
-    public function value()
+    public function getValue()
     {
         return $this->value;
+    }
+
+
+    public function __toString(): string
+    {
+        return $this->getValue();
     }
 }

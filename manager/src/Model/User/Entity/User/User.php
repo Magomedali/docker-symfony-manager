@@ -55,7 +55,7 @@ class User {
     
 
     /**
-     * @var string
+     * @var Token
      * @ORM\Column(type="string", name="confirm_token", nullable=true)
      */
     private $confirmToken;
