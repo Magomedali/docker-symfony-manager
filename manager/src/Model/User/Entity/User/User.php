@@ -18,9 +18,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User {
     
-    const STATUS_NEW = 0;
-    const STATUS_WAIT = 1;
-    const STATUS_ACTIVE = 2;
+    private const STATUS_NEW = 0;
+    private const STATUS_WAIT = 1;
+    public const STATUS_ACTIVE = 2;
     
     
     
