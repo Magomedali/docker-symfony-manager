@@ -60,7 +60,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     	$token = new CsrfToken('authenticate', $credentials['csrf_token']);
     	if(!$this->csrfTokenManager->isTokenValid($token))
     	{
-    		throw new InvalidCsrfTokenException();
+    		throw new InvalidCsrfTokenException('');
     	}
 
     	$user = $userProvider->loadUserByUsername($credentials['email']);
@@ -92,7 +92,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     	}
 
 
-    	throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+    	return new RedirectResponse($this->urlGenerator->generate("home"));
     }
 
 
