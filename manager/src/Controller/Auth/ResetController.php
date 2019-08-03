@@ -72,7 +72,7 @@ class ResetController extends AbstractController
 			$this->redirectToRoute('home');
 		}
 
-		$command = new Reset\Reset\Command();
+		$command = new Reset\Reset\Command($token);
 
 		$form = $this->createForm(Reset\Reset\Form::class, $command);
 		$form->handleRequest($request);
@@ -82,7 +82,7 @@ class ResetController extends AbstractController
 			try {
 				$handler->handle($command);
 				$this->addFlash("success","Password is successfully changed.");
-				$this->redirectToRoute("home");
+				return $this->redirectToRoute("home");
 			} catch (\DomainException $e) {
 				$this->logger->error($e->getMessage(),['exception'=>$e]);
 				$this->addFlash("error",$e->getMessage());

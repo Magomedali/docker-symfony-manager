@@ -19,7 +19,7 @@ class Handler {
     
     private $hasher;
     
-    public function __construct(UserRepository $users,Flusher $flusher,PasswordHasher $sender) {
+    public function __construct(UserRepository $users,Flusher $flusher,PasswordHasher $hasher) {
         $this->users = $users;
         $this->flusher = $flusher;
         $this->hasher = $hasher;
@@ -28,7 +28,7 @@ class Handler {
 
     public function handle(Command $command)
     {
-        if(!$user = $this->users->findByResetToken(new ResetToken($command->token)))
+        if(!$user = $this->users->findByResetToken($command->token))
                 throw new \DomainException("Incorrect or confirmed token.");
         
         $user->passwordReset(new DateTimeImmutable(),$this->hasher->hash($command->password));

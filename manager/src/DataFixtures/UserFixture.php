@@ -23,11 +23,11 @@ class UserFixture extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $hash = $this->hasher->hash('password');
+        $hash = $this->hasher->hash('12345qwE');
         
         $user = User::signUpByEmail(
             Id::next(),
-            new Email('admin@app.test'),
+            new Email('web-ali@yandex.ru'),
             new Token('token'),
             $hash
         );

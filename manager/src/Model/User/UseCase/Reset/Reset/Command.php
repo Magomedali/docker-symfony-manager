@@ -20,4 +20,10 @@ class Command {
 	 * @Assert\Length(min=6)
     */
     public $password;
+
+
+    public function __construct(string $token)
+    {
+        $this->token = $token;
+    }
 }

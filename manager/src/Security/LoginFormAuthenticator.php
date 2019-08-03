@@ -89,7 +89,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $provideKey)
     {
-    	if($targetPath = $this->getTargetPath($request->getSession(), $providerKey))
+    	if($targetPath = $this->getTargetPath($request->getSession(), $provideKey))
     	{
     		return new RedirectResponse($targetPath);
     	}

@@ -62,7 +62,7 @@ class SignUpController extends AbstractController
     */
     public function confirm(string $token, SignUp\Confirm\Handler $handler): Response
     {
-        $command = SignUp\Confirm\Command($token);
+        $command = new SignUp\Confirm\Command($token);
 
         try {
             $handler->handle($command);
@@ -72,7 +72,7 @@ class SignUpController extends AbstractController
             $this->addFlash("error",$e->getMessage());
         }
 
-        return $this->redirectToRoute("hpme");
+        return $this->redirectToRoute("home");
     }
 
 
