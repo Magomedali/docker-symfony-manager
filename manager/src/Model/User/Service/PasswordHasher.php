@@ -13,4 +13,12 @@ class PasswordHasher {
         
         return $hash;
     }
+
+
+
+    public function validate($password, $hash): bool
+    {
+    	return password_verify($password, $hash);
+    	// return $hash == $this->hash($password);
+    }
 }

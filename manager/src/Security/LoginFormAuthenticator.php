@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Security;
 
+use App\Model\User\Service\PasswordHasher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -23,12 +24,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
 	private $urlGenerator;
 	private $csrfTokenManager;
+    private $hasher;
 
 
-	public function __construct(UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager)
+	public function __construct(UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, PasswordHasher $hasher)
     {
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
+        $this->hasher = $hasher;
     }
 
     public function supports(Request $request): bool
@@ -65,7 +68,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     	$user = $userProvider->loadUserByUsername($credentials['email']);
 
-    	if(!$user)
+    	if(!$user || !$this->checkCredentials($credentials,$user))
     	{
     		throw new CustomUserMessageAuthenticationException('Username could not be found.');
     	}
@@ -76,11 +79,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
 
 
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, UserInterface $user): bool
     {
-        // Check the user's password or other credentials and return true or false
-        // If there are no credentials to check, you can just return true
-        throw new \Exception('TODO: check the credentials inside '.__FILE__);
+        return $this->hasher->validate($credentials['password'],$user->getPassword());
     }
 
 
