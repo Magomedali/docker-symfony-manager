@@ -32,9 +32,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ml-auto">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('home') }}">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Home</a>
+                    </li>
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('auth.signup') }}">Sign Up</a>
                     </li>
@@ -44,6 +49,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('auth.reset') }}">Reset</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
