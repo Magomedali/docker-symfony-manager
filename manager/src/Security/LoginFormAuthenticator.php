@@ -68,7 +68,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     	$user = $userProvider->loadUserByUsername($credentials['email']);
 
-    	if(!$user || !$this->checkCredentials($credentials,$user))
+    	if(!$user)
     	{
     		throw new CustomUserMessageAuthenticationException('Username could not be found.');
     	}
