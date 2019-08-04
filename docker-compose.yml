@@ -57,6 +57,18 @@ services:
         ports:
             - "8082:8025"
             
+    manager-pgadmin:
+        image: dpage/pgadmin4
+        ports:
+            - "8001:80"
+        links:
+            - manager-postgres
+        environment:
+            PGADMIN_DEFAULT_EMAIL: app
+            PGADMIN_DEFAULT_PASSWORD: secret
+        depends_on:
+            - manager-postgres
+            
 volumes:
     manager-postgres:
     composer:
