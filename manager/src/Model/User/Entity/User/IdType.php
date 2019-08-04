@@ -28,4 +28,10 @@ class IdType extends GuidType
     {
         return self::NAME;
     }
+
+
+    public function requiresSQLCommentHint(AbstractPlatform $platform) : bool
+    {
+        return true;
+    }
 }

@@ -78,7 +78,7 @@ manager-fixtures:
 
 manager-init: manager-composer-install manager-wait-db manager-migrations manager-fixtures
 
-
+down: dev-compose-down
 test: manager-test
 init: dev-compose-down dev-compose-pull dev-compose-build dev-compose-up manager-init
 up: dev-compose-up

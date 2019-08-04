@@ -29,4 +29,11 @@ class EmailType extends StringType
     }
 
 
+
+    public function requiresSQLCommentHint(AbstractPlatform $platform) : bool
+    {
+        return true;
+    }
+
+
 }
