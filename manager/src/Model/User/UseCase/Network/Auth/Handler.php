@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Model\User\UseCase\Network\Auth;
 
-use App\Model\User\Entity\User\{User,Email,Id,Token,UserRepository};
+use App\Model\User\Entity\User\{User,Id,Token,UserRepository};
 use App\Model\User\Service\{PasswordHasher,ConfirmTokenizer,ConfirmTokenSender};
 use App\Model\Flusher;
 /**
@@ -26,8 +26,6 @@ class Handler {
     
     public function handle(Command $command): void
     {
-        $email = new Email($$command->email);
-        $token = $this->tokenizer->generate();
         
         if($this->users->hasByNetworkIdentity($command->network,$command->identity))
             throw new \DomainException("User already exists!");

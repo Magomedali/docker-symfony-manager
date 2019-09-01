@@ -82,3 +82,7 @@ down: dev-compose-down
 test: manager-test
 init: dev-compose-down dev-compose-pull dev-compose-build dev-compose-up manager-init
 up: dev-compose-up
+
+
+php-cli:
+	docker-compose run --rm manager-php-cli bash

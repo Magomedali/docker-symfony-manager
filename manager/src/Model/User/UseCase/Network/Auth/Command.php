@@ -14,5 +14,12 @@ class Command{
     
     
     public $identity;
+
+
+    public function __construct($network,$identity)
+    {
+    	$this->network = $network;
+    	$this->identity = $identity;
+    }
     
 }
